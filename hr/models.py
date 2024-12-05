@@ -6,6 +6,25 @@ class Course(models.Model):
     duration = models.CharField(max_length=50)
     serial_number = models.CharField(max_length=50, unique=True)
     description = models.TextField()
-    trainer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, limit_choices_to={'username__regex': r'^\d{4}$'})
+    trainer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, limit_choices_to={'username__regex': r'^\
+    d{4}$'})
     def __str__(self):
         return self.course_name
+
+
+class Material(models.Model):
+    title = models.CharField(max_length=255)
+    file = models.FileField(upload_to='materials/')  # This will store files in the 'materials/' directory
+    course = models.ForeignKey(Course, related_name='materials', on_delete=models.CASCADE)  # Related to the Course model
+
+    def __str__(self):
+        return self.title
+
+
+class Assignment(models.Model):
+    title = models.CharField(max_length=255)
+    due_date = models.DateField()
+    course = models.ForeignKey('Course', related_name='assignments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

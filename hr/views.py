@@ -188,3 +188,24 @@ def course_update(request, course_id):
     return render(request, 'courses/edit_courses.html', {'form': form, 'trainers': trainers,
                                                          'course': course})
 #=====================================================================================================================#
+
+#COURSE MATERIAL UPLOAD
+
+from django.shortcuts import render, redirect
+from .models import Course, Material
+from .forms import MaterialForm
+
+def upload_material(request, course_id):
+    course = Course.objects.get(id=course_id)  # Get the course to which the material belongs
+    if request.method == 'POST':
+        form = MaterialForm(request.POST, request.FILES)  # Include `request.FILES` to handle file uploads
+        if form.is_valid():
+            material = form.save(commit=False)
+            material.course = course  # Associate the material with the course
+            material.save()  # Save the material to the database
+            return redirect('course_list')  # Redirect to course details page after upload
+    else:
+        form = MaterialForm()
+
+    return render(request, 'hr/upload_material.html', {'form': form, 'course': course})
+

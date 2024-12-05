@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Material</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #512da8;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Form Styling */
+        .form-container {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .form-container label {
+            font-size: 1.1rem;
+            color: #512da8;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-container input, .form-container select, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #5c6bc0;
+        }
+
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="{% url 'employee_dashboard' %}">Dashboard</a>
+            <a href="{% url 'available_courses' %}">Courses</a>
+        </div>
+    </nav>
+
+    <!-- Upload Material Container -->
+    <div class="container">
+        <header>
+            <h1>Upload Material for {{ course.course_name }}</h1>
+            <p>Here you can upload the material related to this course.</p>
+        </header>
+
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="title">Material Title:</label>
+                {{ form.title }}
+
+                <label for="file">Choose Material File:</label>
+                {{ form.file }}
+
+                <label for="course">Course:</label>
+                {{ form.course }}
+
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            margin-top : 100px;
+            max-width: 1200px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #512da8;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Course Section */
+        .course-info {
+            margin-bottom: 30px;
+        }
+
+        .course-info h2 {
+            font-size: 2rem;
+            color: #512da8;
+            margin-bottom: 15px;
+        }
+
+        .course-info p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Tabs for Course Sections */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: #5c6bc0;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Assignments & Materials */
+        .assignments, .materials {
+            text-align: left;
+            padding-left: 20px;
+            font-size: 1rem;
+        }
+
+        .assignments ul, .materials ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .assignments li, .materials li {
+            margin-bottom: 10px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="{% url 'employee_dashboard' %}">Dashboard</a>
+            <a href="{% url 'available_courses' %}">Courses</a>
+        </div>
+    </nav>
+
+    <!-- Course Details Container -->
+    <div class="container">
+        <header>
+            <h1>Course Details: {{ course.course_name }}</h1>
+            <p>Here you can find detailed information about the course, assignments, and materials.</p>
+        </header>
+
+        <div class="course-info">
+            <h2>Course Overview</h2>
+            <p>{{ course.description }}</p>
+        </div>
+
+        <!-- Tabs to Switch Between Course Sections -->
+        <div class="tabs">
+            <button class="tab-btn" onclick="showTab('assignments')">Assignments</button>
+            <button class="tab-btn" onclick="showTab('materials')">Materials</button>
+        </div>
+
+        <!-- Assignments Section -->
+        <div id="assignments" class="tab-content">
+            <h3>Assignments</h3>
+            <div class="assignments">
+                <ul>
+                    {% for assignment in course.assignments.all %}
+                        <li>{{ assignment.title }} - Due: {{ assignment.due_date }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Materials Section -->
+        <div id="materials" class="tab-content">
+            <h3>Course Materials</h3>
+            <div class="materials">
+                <ul>
+                    {% for material in course.materials.all %}
+                        <li>
+                            <a href="{{ material.file.url }}" target="_blank">{{ material.title }}</a>
+                            <a href="{{ material.file.url }}" download="{{ material.title }}" class="download-link">Download</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle between tabs
+        function showTab(tabName) {
+            // Hide all tabs
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show the selected tab
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

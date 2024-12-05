@@ -30,3 +30,4 @@ class EmployeeCourse(models.Model):
 
     def __str__(self):
         return f"{self.employee.username} - {self.course.course_name}"
+

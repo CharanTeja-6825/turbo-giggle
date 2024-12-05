@@ -14,3 +14,11 @@ class CourseForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Enter course description'}),
             'trainer': forms.Select(attrs={'placeholder': 'Select a trainer'}),
         }
+
+from django import forms
+from .models import Material
+
+class MaterialForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = ['title', 'file', 'course']

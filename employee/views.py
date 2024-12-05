@@ -73,17 +73,21 @@ def course_dashboard(request):
     }
     return render(request, 'employee/employee_dashboard.html', context)
 
-def course_detail(request, course_id):
-    # Get details of a specific course
-    course = get_object_or_404(Course, id=course_id)
-    context = {
-        'course': course
-    }
-    return render(request, 'employee/course_detail.html', context)
-
 def request_enrollment(request):
     # Handle course enrollment requests
     if request.method == 'POST':
         # Logic to process the course request
         pass
     return render(request, 'employee/request_enrollment.html')
+
+##########  COURSE DETAILS ##########
+
+from django.shortcuts import render
+from hr.models import Course
+
+def course_overview(request, course_id):
+    # Retrieve the course by ID
+    course = Course.objects.get(id=course_id)
+
+    # Pass the course object to the template
+    return render(request, 'courses/course_overview.html', {'course': course})
