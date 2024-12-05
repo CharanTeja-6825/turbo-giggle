@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETOS</title>
+    <title>Course Details</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-    <!-- Google Font: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
         /* General Reset */
         * {
@@ -19,14 +16,102 @@
         }
 
         body {
-            background-color: #c9d6ff;
-            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
-            height: 100vh;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             text-align: center;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #512da8;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Course Section */
+        .course-info {
+            margin-bottom: 30px;
+        }
+
+        .course-info h2 {
+            font-size: 2rem;
+            color: #512da8;
+            margin-bottom: 15px;
+        }
+
+        .course-info p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Tabs for Course Sections */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: #5c6bc0;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Assignments & Materials */
+        .assignments, .materials {
+            text-align: left;
+            padding-left: 20px;
+            font-size: 1rem;
+        }
+
+        .assignments ul, .materials ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .assignments li, .materials li {
+            margin-bottom: 10px;
         }
 
         /* Navbar Styles */
@@ -59,162 +144,6 @@
         .navbar .links a:hover {
             color: #512da8;
         }
-
-        .navbar .login-btn {
-            padding: 10px 20px;
-            background-color: #512da8;
-            color: white;
-            border-radius: 20px;
-            border: none;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .navbar .login-btn:hover {
-            background-color: #5c6bc0;
-            transform: translateY(-3px);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            color: #333;
-            padding: 520px 0;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .hero .btn {
-            padding: 15px 40px;
-            background-color: #512da8;
-            color: white;
-            border-radius: 30px;
-            border: none;
-            font-size: 1rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            margin: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .hero .btn:hover {
-            background-color: #5c6bc0;
-            transform: translateY(-3px);
-        }
-
-        /* About Section */
-        .about {
-            padding: 80px 80px;
-            background-color: #f4f4f4;
-            color: #333;
-            text-align: center;
-            border-radius: 15px;
-        }
-
-        .about h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .about p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Chatbot Styles */
-        .chatbox {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 300px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            z-index: 999;
-        }
-
-        .chatbox-header {
-            background-color: #512da8;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .chatbox-body {
-            padding: 15px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .chatbox-input {
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-top: 1px solid #ddd;
-            font-size: 1rem;
-            border-radius: 8px;
-        }
-
-        .chatbox-footer {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .chatbot-message {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f4f4f4;
-            border-radius: 8px;
-        }
-
-        .chatbot-message.user {
-            background-color: #512da8;
-            color: #fff;
-            text-align: right;
-        }
-
-        .chatbot-message.bot {
-            background-color: #e8e8e8;
-            color: #333;
-            text-align: left;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .navbar .brand {
-                font-size: 1.5rem;
-            }
-
-            .navbar .links a {
-                font-size: 0.9rem;
-            }
-
-            .chatbox {
-                width: 250px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -223,79 +152,63 @@
     <nav class="navbar">
         <div class="brand">ETOS</div>
         <div class="links">
-            <a href="{% url 'homepage' %}">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
+            <a href="{% url 'employee_dashboard' %}">Dashboard</a>
+            <a href="{% url 'available_courses' %}">Courses</a>
         </div>
-        <form action="{% url 'login' %}" method="get">
-            <button type="submit" class="login-btn">Login</button>
-        </form>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <h1>Welcome to Our Website</h1>
-        <p>Please log in to access your training dashboard and begin your onboarding journey.</p>
-        <form action="{% url 'login' %}" method="get">
-            <button type="submit" class="btn">Register Now</button>
-            <button type="submit" class="btn">Get Started</button>
-        </form>
-    </section>
+    <!-- Course Details Container -->
+    <div class="container">
+        <header>
+            <h1>Course Details: {{ course.course_name }}</h1>
+            <p>Here you can find detailed information about the course, assignments, and materials.</p>
+        </header>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <h2>About Us</h2>
-        <p>We are dedicated to helping organizations streamline their employee training and onboarding processes. Our platform provides tools to manage training modules, track progress, and support employees and trainers every step of the way.</p>
-    </section>
+        <div class="course-info">
+            <h2>Course Overview</h2>
+            <p>{{ course.description }}</p>
+        </div>
 
-    <!-- Chatbot -->
-    <div class="chatbox">
-        <div class="chatbox-header">
-            Chat with us
+        <!-- Tabs to Switch Between Course Sections -->
+        <div class="tabs">
+            <button class="tab-btn" onclick="showTab('assignments')">Assignments</button>
+            <button class="tab-btn" onclick="showTab('materials')">Materials</button>
         </div>
-        <div class="chatbox-body" id="chatbox-body">
-            <div class="chatbot-message bot">Hello! How can I assist you today?</div>
+
+        <!-- Assignments Section -->
+        <div id="assignments" class="tab-content">
+            <h3>Course Assignments</h3>
+            <div class="assignments">
+                <ul>
+                    {% for assignment in course.assignments %}
+                        <li><strong>{{ assignment.title }}</strong> - Due Date: {{ assignment.due_date }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        <div class="chatbox-footer">
-            <input type="text" class="chatbox-input" id="chatbox-input" placeholder="Type a message..." onkeypress="sendMessage(event)">
+
+        <!-- Materials Section -->
+        <div id="materials" class="tab-content">
+            <h3>Course Materials</h3>
+            <div class="materials">
+                <ul>
+                    {% for material in course.materials %}
+                        <li><a href="{{ material.file_url }}" target="_blank">{{ material.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 
     <script>
-        function sendMessage(event) {
-            if (event.key === "Enter") {
-                const input = document.getElementById('chatbox-input');
-                const message = input.value.trim();
-                if (message) {
-                    appendMessage(message, 'user');
-                    input.value = '';
-                    setTimeout(() => {
-                        botResponse(message);
-                    }, 1000);
-                }
-            }
-        }
+        // Function to toggle between tabs
+        function showTab(tabName) {
+            // Hide all tabs
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => tab.classList.remove('active'));
 
-        function appendMessage(message, sender) {
-            const chatboxBody = document.getElementById('chatbox-body');
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('chatbot-message', sender);
-            messageDiv.textContent = message;
-            chatboxBody.appendChild(messageDiv);
-            chatboxBody.scrollTop = chatboxBody.scrollHeight;
-        }
-
-        function botResponse(userMessage) {
-            const responses = {
-                "hello": "Hi! How can I help you today?",
-                "register": "Please visit the registration page to get started.",
-                "courses": "We offer a variety of training courses for employees and trainers.",
-                "help": "Feel free to ask anything about our platform!"
-            };
-
-            const response = responses[userMessage.toLowerCase()] || "I'm sorry, I didn't understand that.";
-            appendMessage(response, 'bot');
+            // Show the selected tab
+            document.getElementById(tabName).classList.add('active');
         }
     </script>
 
