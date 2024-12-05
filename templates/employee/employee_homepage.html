@@ -74,6 +74,7 @@
         }
 
         .dropdown-content {
+            margin-top: 10px;
             border-radius: 9px;
             display: none;
             position: absolute;
@@ -194,14 +195,11 @@
         <div class="brand">ETOS</div>
         <div class="links">
             <a href="{% url 'employee_homepage' %}">Home</a>
-             <div class="links">
-                <a href="{% url 'employee_dashboard' %}">Dashboard</a>
-            </div>
             <div class="dropdown">
                 <a href="#">Courses <i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-content">
                     <a href="{% url 'available_courses' %}">Register Courses</a>
-                    <a href="#">My Course</a>
+                    <a href="{% url 'employee_dashboard' %}">My Course</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -224,8 +222,12 @@
     <section class="hero">
         <h1>Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
         <p>View and manage your courses and examinations.</p>
-        <button class="btn">Learn More</button>
-        <button class="btn">Get Started</button>
+        <a href="{% url 'available_courses' %}">
+            <button class="btn">Register</button>
+        </a>
+        <a href="{% url 'employee_dashboard' %}">
+            <button class="btn">Courses</button>
+        </a>
     </section>
 
     <!-- Chatbot Button -->
