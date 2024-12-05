@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETOS - Course List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+
+        /* Course List Section */
+        .course-list {
+            padding: 20px 10px; /* Adjusted padding for better fit */
+            margin-bottom: 250px;
+            margin-top: 300px;
+            background-color: white; /* White background */
+            border-radius: 15px;
+            max-width: 1300px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a subtle effect */
+        }
+
+        .course-list h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #512da8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #512da8;
+            color: white;
+        }
+
+        td {
+            color: #333;
+        }
+
+        .btn {
+            padding: 8px 25px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        /* Flexbox for Button Container */
+        .button-container {
+            display: flex;
+            gap: 5px; /* Space between buttons */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="{% url 'home_redirect' %}">Home</a>
+            <a href="{% url 'employee_dashboard' %}">Dashboard</a>
+        </div>
+    </nav>
+
+    <!-- Course List Section -->
+    <section class="course-list">
+        <h2>Available Courses</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Duration</th>
+                    <th>Serial Number</th>
+                    <th>Description</th>
+                    <th>Trainer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.duration }} Hrs</td>
+                        <td>{{ course.serial_number }}</td>
+                        <td>{{ course.description }}</td>
+                        <td>
+                {% if course.trainer %}
+                    {{ course.trainer.get_full_name }}  <!-- or use course.trainer.name if that's the field -->
+                {% else %}
+                    No Trainer Assigned
+                {% endif %}
+            </td>
+                        <td>
+    <div class="button-container">
+        <a href="{% url 'register_course' course.id %}" class="btn">Register</a> <!-- Assuming course_edit view exists -->
+    </div>
+</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No courses available at the moment.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+</body>
+</html>

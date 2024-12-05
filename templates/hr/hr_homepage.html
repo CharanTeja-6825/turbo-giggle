@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETOS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Font: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+
+        .navbar .login-btn {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .login-btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            color: #333;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero .btn {
+            padding: 15px 40px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .navbar .brand {
+                font-size: 1.5rem;
+            }
+
+            .navbar .links a {
+                font-size: 0.9rem;
+            }
+        }
+        /* Dropdown Menu */
+        .dropdown {
+            padding: 20px 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            padding: 10px 5px;
+            margin-top: 15px;
+            border-radius: 9px;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 15px 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        /* Chatbot Button */
+        .chatbot-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .chatbot-btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="{% url 'hr_homepage' %}">Home</a>
+
+            <div class="dropdown">
+                <a href="#services"> Courses <i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="{% url 'course_create' %}"> Create Courses </a>
+                    <a href="{% url 'course_list' %}"> Courses List </a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a href="#services">Trainer <i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="{% url 'trainer_list' %}"> Trainer List </a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a href="#services">Employee <i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="{% url 'employee_list' %}"> Employee list </a>
+                    <a href="#"> Employee Courses </a>
+                    <a href="#"> Employee Assignment </a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a href="#">{{ user.username }}<i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="{% url 'update_profile' %}"> Update </a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome, {{ user.first_name }} {{ user.last_name }}</h1>
+        <p>View and manage the courses for trainers and employees and their activities.</p>
+        <button class="btn">Learn More</button>
+        <button class="btn">Get Started</button>
+    </section>
+<!-- Chatbot Button -->
+    <button class="chatbot-btn">
+    ChatBot <i class="fa fa-robot"></i>
+</button>
+
+<script>
+    // Update the selector to match the correct button class
+    document.querySelector('.chatbot-btn').addEventListener('click', function() {
+        alert('Chatbot is under development. Stay tuned!');
+    });
+</script>
+
+</body>
+</html>

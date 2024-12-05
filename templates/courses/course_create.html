@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETOS - Course Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+
+        .navbar .login-btn {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .login-btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        /* Form Section */
+        .hero {
+            height: 100vh;
+            color: #333;
+            padding: 100px 0;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form-container {
+            padding: 50px;
+            background-color: #f4f4f4;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #512da8;
+        }
+
+        .form-container label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 15px 0 5px;
+            color: #333;
+        }
+
+        .form-container input[type="text"], .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .form-container .btn {
+            padding: 15px 40px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .form-container .btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="{% url 'home_redirect' %}">Home</a>
+            <a href="{% url 'course_list' %}">Courses</a>
+        </div>
+    </nav>
+
+    <!-- Course Form Section -->
+    <section class="hero">
+        <div class="form-container">
+            <h2>Create Course</h2>
+            <form method="post" action="{% url 'course_create' %}">
+    {% csrf_token %}
+
+    <label for="course_name">Course Name:</label>
+    <input type="text" id="course_name" name="course_name" placeholder="Enter course name" required>
+
+    <label for="duration">Duration:</label>
+    <input type="text" id="duration" name="duration" placeholder="Enter duration" required>
+
+    <label for="serial_number">Serial Number:</label>
+    <input type="text" id="serial_number" name="serial_number" placeholder="Enter serial number" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" placeholder="Enter course description" required></textarea>
+
+    <label for="trainer">Select Trainer:</label>
+    <select id="trainer" name="trainer" required>
+        <option>Select a trainer</option>
+        {% for trainer in trainers %}
+        <option value="{{ trainer.id }}">{{ trainer.get_full_name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn">Save Course</button>
+</form>
+
+        </div>
+    </section>
+
+</body>
+</html>
