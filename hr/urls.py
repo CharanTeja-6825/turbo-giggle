@@ -1,5 +1,8 @@
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
+from django.conf import settings
+
 
 urlpatterns = [
     path('', views.HomePage, name='homepage'),
@@ -15,3 +18,6 @@ urlpatterns = [
     path('courses/<int:course_id>/edit/', views.course_update, name='course_update'),
     path('course/<int:course_id>/upload/', views.upload_material, name='upload_material'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
