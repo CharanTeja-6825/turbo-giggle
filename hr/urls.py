@@ -20,6 +20,7 @@ urlpatterns = [
     path('course/<int:course_id>/upload/', views.upload_material, name='upload_material'),
     #path('corporate-training/', views.corporate_training_view, name='corporate_training'),
     path('training-success/', views.training_success, name='training_success'),
+    path('chatbot/', views.chat_with_gemini, name='chatbot')
 ]
 
 if settings.DEBUG:

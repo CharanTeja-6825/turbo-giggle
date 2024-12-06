@@ -33,7 +33,7 @@ def delete_trainer(request, user_id):
     messages.success(request, "Trainer deleted successfully.")
     return redirect('trainer_list')
 
-@login_required
+
 def assigned_courses(request):
     # Filter courses where the trainer matches the logged-in user
     trainer_courses = Course.objects.filter(trainer=request.user)
@@ -43,3 +43,27 @@ def assigned_courses(request):
     }
     return render(request, 'trainer/assigned_courses.html', context)
 #=====================================================================================================================#
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from hr.models import Course
+from employee.models import EmployeeCourse
+
+@login_required
+def trainer_employee_view(request):
+    # Get the currently logged-in trainer
+    trainer = request.user
+
+    # Get the courses assigned to the trainer
+    trainer_courses = Course.objects.filter(trainer=trainer)
+
+    # Retrieve employees registered for these courses
+    registrations = EmployeeCourse.objects.filter(course__in=trainer_courses).select_related('employee', 'course')
+
+    # Structure the data to pass to the template
+    context = {
+        'trainer': trainer,
+        'trainer_courses': trainer_courses,
+        'registrations': registrations,
+    }
+    return render(request, 'trainer/trainer_employee.html', context)
