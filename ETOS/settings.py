@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'hr',
     'employee',
     'trainer',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Define media root and URL for uploaded files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Store uploaded files in the 'media' folder
+
+from decouple import config
+
+GEMINI_API_KEY = config('GEMINI_API_KEY')
+GEMINI_API_URL = config('GEMINI_API_URL')
