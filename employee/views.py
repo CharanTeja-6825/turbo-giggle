@@ -80,7 +80,7 @@ def request_enrollment(request):
         pass
     return render(request, 'employee/request_enrollment.html')
 
-##########  COURSE DETAILS ##########
+##########  COURSE OVERVIEW ##########
 
 from django.shortcuts import render
 from hr.models import Course

@@ -115,6 +115,28 @@
             margin-bottom: 10px;
         }
 
+        .label {
+            font-weight: bold;
+            color: #512da8;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            background-color: #512da8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #5c6bc0;
+        }
+
         /* Navbar Styles */
         .navbar {
             width: 100%;
@@ -179,10 +201,14 @@
         <!-- Assignments Section -->
         <div id="assignments" class="tab-content">
             <h3>Assignments</h3>
+            <label class="label">Please review the assignments below:</label>
             <div class="assignments">
                 <ul>
                     {% for assignment in course.assignments.all %}
-                        <li>{{ assignment.title }} - Due: {{ assignment.due_date }}</li>
+                        <li>
+                            {{ assignment.title }} - Due: {{ assignment.due_date }}
+                            <button class="btn">Submit</button>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -191,12 +217,15 @@
         <!-- Materials Section -->
         <div id="materials" class="tab-content">
             <h3>Course Materials</h3>
+            <label class="label">Click to download the materials:</label>
             <div class="materials">
                 <ul>
                     {% for material in course.materials.all %}
-                        <li>
+                         <li>
                             <a href="{{ material.file.url }}" target="_blank">{{ material.title }}</a>
-                            <a href="{{ material.file.url }}" download="{{ material.title }}" class="download-link">Download</a>
+                            <a href="{{ material.file.url }}" download="{{ material.title }}" class="download-link, btn"
+                            >
+                                Download</a>
                         </li>
                     {% endfor %}
                 </ul>
