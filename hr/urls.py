@@ -1,4 +1,5 @@
 from django.conf.urls.static import static
+from django.shortcuts import render
 from django.urls import path
 from . import views
 from django.conf import settings
@@ -17,6 +18,8 @@ urlpatterns = [
     path('courses/delete/<int:course_id>/', views.course_delete, name='course_delete'),
     path('courses/<int:course_id>/edit/', views.course_update, name='course_update'),
     path('course/<int:course_id>/upload/', views.upload_material, name='upload_material'),
+    #path('corporate-training/', views.corporate_training_view, name='corporate_training'),
+    path('training-success/', views.training_success, name='training_success'),
 ]
 
 if settings.DEBUG:

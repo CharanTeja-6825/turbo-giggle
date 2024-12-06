@@ -280,15 +280,17 @@
             <!-- Form Section -->
             <div class="corporate-form">
                 <h3>Elevate Your Team: Unlock Corporate Training Excellence!</h3>
-                <form action="#" method="post">
-                    <input type="text" name="full_name" placeholder="Full Name">
-                    <input type="email" name="email" placeholder="Email Address">
-                    <input type="text" name="mobile" placeholder="Mobile Number">
+                <form action="{% url 'corporate_training' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="full_name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <input type="text" name="mobile" placeholder="Mobile Number" pattern="\d{10}" required>
                     <input type="text" name="company_name" placeholder="Company Name">
-                    <input type="number" name="participants" placeholder="Number of Participants">
-                    <textarea name="message" placeholder="Your Message"></textarea>
+                    <input type="number" name="participants" placeholder="Number of Participants" min="1">
+                    <textarea name="message" placeholder="Your Message" rows="5"></textarea>
                     <button type="submit">Submit</button>
                 </form>
+
             </div>
         </div>
     </section>

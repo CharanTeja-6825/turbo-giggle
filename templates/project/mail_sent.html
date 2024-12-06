@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Sent Successfully</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .mail-sent-container {
+            text-align: center;
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            color: #00274d;
+        }
+
+        .mail-sent-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #512da8;
+        }
+
+        .mail-sent-container p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .mail-sent-container a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .mail-sent-container a:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="mail-sent-container">
+        <h2>Thank You!</h2>
+        <p>Your inquiry has been received successfully. We have sent you a confirmation email.</p>
+        <a href="{% url 'homepage' %}">Go Back to Home</a>
+    </div>
+</body>
+</html>

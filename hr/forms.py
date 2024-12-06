@@ -22,3 +22,12 @@ class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
         fields = ['title', 'file', 'course']
+
+# forms.py
+from django import forms
+from .models import TrainingInquiry
+
+class TrainingInquiryForm(forms.ModelForm):
+    class Meta:
+        model = TrainingInquiry
+        fields = ['full_name', 'email', 'mobile', 'company_name', 'participants', 'message']

@@ -209,3 +209,15 @@ def upload_material(request, course_id):
 
     return render(request, 'hr/upload_material.html', {'form': form, 'course': course})
 
+
+# views.py
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from .forms import TrainingInquiryForm
+
+
+# views.py
+def training_success(request):
+    return render(request, 'project/mail_sent.html')
+
