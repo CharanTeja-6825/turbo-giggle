@@ -158,110 +158,26 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        /* Chatbot toggle button */
-        #chatbot-button {
+        /* Chatbot Button */
+        .chatbot-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
+            padding: 15px 25px;
             background-color: #512da8;
-            color: #fff;
+            color: white;
+            border-radius: 50px;
             border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            font-size: 24px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        /* Chatbot container */
-        .chatbot-container {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 400px;
-            height: 500px;
-            background-color: #fff;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: none; /* Initially hidden */
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 1000;
-        }
-
-        .chatbot-header {
-            background-color: #512da8;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            position: relative;
-        }
-
-        .chatbot-header .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .chatbot-body {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #f4f4f4;
-        }
-
-        .chatbot-message {
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            max-width: 75%;
-            margin: 10px 0;
-        }
-
-        .user-message {
-            align-self: flex-end;
-            background-color: #512da8;
-            color: #fff;
-        }
-
-        .bot-message {
-            align-self: flex-start;
-            background-color: #eee;
-        }
-
-        .chatbot-footer {
-            padding: 10px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .chatbot-footer input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 20px;
-            background-color: #eee;
-            outline: none;
-        }
-
-        .chatbot-footer button {
-            background-color: #512da8;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
+        .chatbot-btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -316,94 +232,8 @@
         <button class="btn">Get Started</button>
     </section>
 <!-- Chatbot Button -->
-    <button id="chatbot-button">
-        <i class="fa-solid fa-comments"></i>
-    </button>
-
-    <!-- Chatbot Container -->
-    <div class="chatbot-container" id="chatbot-container">
-        <!-- Chatbot Header -->
-        <div class="chatbot-header">
-            Chatbot
-            <button class="close-btn" id="close-chatbot">&times;</button>
-        </div>
-        <!-- Chatbot Body -->
-        <div class="chatbot-body" id="chatbot-body">
-            <div class="bot-message chatbot-message">
-                Hi! How can I assist you today?
-            </div>
-        </div>
-        <!-- Chatbot Footer -->
-        <div class="chatbot-footer">
-            <input type="text" id="chat-input" placeholder="Type a message..." />
-            <button id="send-btn">Send</button>
-        </div>
-    </div>
-
-    <script>
-        // Get elements
-        const chatbotButton = document.getElementById('chatbot-button');
-        const chatbotContainer = document.getElementById('chatbot-container');
-        const closeChatbot = document.getElementById('close-chatbot');
-        const chatBody = document.getElementById('chatbot-body');
-        const input = document.getElementById('chat-input');
-        const sendBtn = document.getElementById('send-btn');
-
-        // Show chatbot when the button is clicked
-        chatbotButton.addEventListener('click', () => {
-            chatbotContainer.style.display = 'flex';
-        });
-
-        // Hide chatbot when the close button is clicked
-        closeChatbot.addEventListener('click', () => {
-            chatbotContainer.style.display = 'none';
-        });
-
-        // Handle sending a message
-        sendBtn.addEventListener('click', async () => {
-            const userInput = input.value.trim();
-            if (userInput) {
-                // Add user message
-                const userMessage = document.createElement('div');
-                userMessage.classList.add('user-message', 'chatbot-message');
-                userMessage.textContent = userInput;
-                chatBody.appendChild(userMessage);
-
-                // Clear input
-                input.value = '';
-
-                // Send message to Django backend
-                try {
-                    const response = await fetch('/chatbot/api/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}' // Add this if CSRF protection is enabled
-                        },
-                        body: JSON.stringify({ message: userInput })
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        const botMessage = document.createElement('div');
-                        botMessage.classList.add('bot-message', 'chatbot-message');
-                        botMessage.textContent = data.reply;
-                        chatBody.appendChild(botMessage);
-
-                        // Scroll to the bottom
-                        chatBody.scrollTop = chatBody.scrollHeight;
-                    } else {
-                        throw new Error('Failed to get a response from the server.');
-                    }
-                } catch (error) {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.classList.add('bot-message', 'chatbot-message');
-                    errorMessage.textContent = "Oops! Something went wrong.";
-                    chatBody.appendChild(errorMessage);
-                }
-            }
-        });
-    </script>
+    <button class="chatbot-btn">
+     <i class="fa-solid fa-comments"></i>
+</button>
 </body>
 </html>
