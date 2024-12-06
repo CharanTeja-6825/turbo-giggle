@@ -221,32 +221,3 @@ from .forms import TrainingInquiryForm
 def training_success(request):
     return render(request, 'project/mail_sent.html')
 
-
-import requests
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-
-GEMINI_API_KEY = "AIzaSyB8m8zGsgfVjek4Cz_mu3HEozwKB32qcHo"  # Store securely, e.g., in environment variables
-GEMINI_API_URL = "https://api.gemini.com/v1/chat"
-
-
-@csrf_exempt
-def chat_with_gemini(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            user_message = data.get("message", "")
-
-            # Send the message to Gemini API
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {GEMINI_API_KEY}",
-            }
-            response = requests.post(GEMINI_API_URL, json={"message": user_message}, headers=headers)
-            response_data = response.json()
-
-            return JsonResponse({"response": response_data.get("response", "No response received.")})
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-    return JsonResponse({"error": "Invalid request method."}, status=400)
