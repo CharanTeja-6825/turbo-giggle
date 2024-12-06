@@ -2,3 +2,4 @@ db.sqlite3
 employee/__pycache__/
 hr/__pycache__/
 trainer/__pycache__/
+ETOS/__pycache__/
