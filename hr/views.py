@@ -113,27 +113,9 @@ def update_profile(request):
 
 #=====================================================Course View=====================================================#
 
-def course_create_get(request):
-    # Filter trainers: users with a 4-character username
-    trainers = User.objects.filter(username__regex=r'^\d{4}$')
-
-    # Initialize the form
-    form = CourseForm()
-
-    # Pass the form and trainers to the template
-    return render(request, 'courses/course_create.html', {'form': form, 'trainers': trainers})
-
-def course_create_post(request):
-    form = CourseForm(request.POST)
-    if form.is_valid():
-        # Save the course data
-        form.save()
-        # Redirect or return a success message
-        return redirect('course_list')  # Change this to your redirect path
-
-    # If the form is invalid, re-render the form with errors and trainer options
-    trainers = User.objects.filter(username__regex=r'^\d{4}$')
-    return render(request, 'courses/course_create.html', {'form': form, 'trainers': trainers})
+from django.shortcuts import render, redirect
+from .forms import CourseForm
+from django.contrib.auth.models import User
 
 def course_create(request):
     # Filter trainers: users with a 4-character username
@@ -142,15 +124,14 @@ def course_create(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the course to the database
-            return redirect('course_list')  # Redirect to course list or success page
+            form.save()
+            return redirect('course_list')  # Update this to your actual course list URL name
         else:
-            print(form.errors)  # Print form errors to console for debugging (optional)
+            print("Form is not valid. Errors:", form.errors)
     else:
-        # Initialize an empty form for GET request
         form = CourseForm()
 
-    # Render the form template, passing both form and trainers
+    # Render the form template
     return render(request, 'courses/course_create.html', {'form': form, 'trainers': trainers})
 
 def course_list(request):
