@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETOS - Assigned Courses</title>
+    <title>ETOS - Course List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -60,26 +60,20 @@
 
         /* Course List Section */
         .course-list {
-            padding: 20px 10px;
+            padding: 20px 10px; /* Adjusted padding for better fit */
             margin-bottom: 250px;
             margin-top: 300px;
-            background-color: white;
+            background-color: white; /* White background */
             border-radius: 15px;
             max-width: 1300px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a subtle effect */
         }
 
         .course-list h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: #512da8;
-        }
-
-        .trainer-info {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: #555;
         }
 
         table {
@@ -119,6 +113,12 @@
             background-color: #5c6bc0;
             transform: translateY(-3px);
         }
+
+        /* Flexbox for Button Container */
+        .button-container {
+            display: flex;
+            gap: 5px; /* Space between buttons */
+        }
     </style>
 </head>
 <body>
@@ -131,7 +131,7 @@
         </div>
     </nav>
 
-    <!-- Assigned Courses Section -->
+<!-- Assigned Courses Section -->
     <section class="course-list">
         <h2>Assigned Courses</h2>
         <div class="trainer-info">

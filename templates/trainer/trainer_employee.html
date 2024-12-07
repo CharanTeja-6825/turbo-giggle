@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trainer - Employee Registrations</title>
+    <title>ETOS - Employee Registrations</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         /* General Reset */
         * {
@@ -18,105 +19,122 @@
         body {
             background-color: #c9d6ff;
             background: linear-gradient(to right, #e2e2e2, #c9d6ff);
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-        }
-
-        .content-container {
-            margin: 100px auto 50px auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 1200px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
             text-align: center;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
             color: #333;
         }
 
-        .table {
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+
+        /* Employee Registrations Section */
+        .employee-registrations {
+            padding: 20px 10px;
+            margin-top: 100px;
+            background-color: white;
+            border-radius: 15px;
+            max-width: 1300px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .employee-registrations h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #512da8;
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-top: 20px;
         }
 
-        .table th, .table td {
-            padding: 12px;
-            text-align: center;
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
-        .table th {
+        th {
             background-color: #512da8;
             color: white;
-            font-weight: bold;
         }
 
-        .table td {
-            background-color: #f9f9f9;
+        td {
+            color: #333;
         }
 
-        .table tr:nth-child(even) td {
-            background-color: #e6e6e6;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
 
-        .table tr:hover td {
-            background-color: #d6d6d6;
-        }
-
-        .chatbot-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 15px 25px;
+        /* Button Styling */
+        .btn {
+            padding: 8px 25px;
             background-color: #512da8;
             color: white;
-            border-radius: 50px;
+            border-radius: 5px;
             border: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .chatbot-btn:hover {
+        .btn:hover {
             background-color: #5c6bc0;
             transform: translateY(-3px);
         }
+
     </style>
 </head>
 <body>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="brand">ETOS</div>
         <div class="links">
-            <a href="{% url 'trainer_homepage' %}">Home</a>
-            <div class="dropdown">
-                <a href="#">Courses <i class="fa fa-caret-down"></i></a>
-                <div class="dropdown-content">
-                    <a href="{% url 'trainer_courses' %}">Assigned</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a href="#">{{ user.first_name }} {{ user.last_name }} <i class="fa fa-caret-down"></i></a>
-                <div class="dropdown-content">
-                    <a href="{% url 'update_profile' %}"> Update </a>
-                    <a href="{% url 'logout' %}">Logout</a>
-                </div>
-            </div>
+            <a href="{% url 'home_redirect' %}">Home</a>
         </div>
     </nav>
 
-    <!-- Content -->
-    <div class="content-container">
-        <h1>Employee Registrations for Your Courses</h1>
-        <table class="table">
+    <!-- Employee Registrations Section -->
+    <section class="employee-registrations">
+        <h2>Employee Registrations for Your Courses</h2>
+
+        <table>
             <thead>
                 <tr>
                     <th>Employee Name</th>
@@ -126,29 +144,19 @@
             </thead>
             <tbody>
                 {% for registration in registrations %}
-                <tr>
-                    <td>{{ registration.employee.first_name }} {{ registration.employee.last_name }}</td>
-                    <td>{{ registration.course.course_name }}</td>
-                    <td>{{ registration.registered_at|date:"F j, Y" }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ registration.employee.first_name }} {{ registration.employee.last_name }}</td>
+                        <td>{{ registration.course.course_name }}</td>
+                        <td>{{ registration.registered_at|date:"F j, Y" }}</td>
+                    </tr>
                 {% empty %}
-                <tr>
-                    <td colspan="3">No employees have registered for your courses yet.</td>
-                </tr>
+                    <tr>
+                        <td colspan="3">No employee registrations found.</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </div>
+    </section>
 
-    <!-- Chatbot Button -->
-    <button class="chatbot-btn">
-        ChatBot <i class="fa fa-robot"></i>
-    </button>
-
-    <script>
-        document.querySelector('.chatbot-btn').addEventListener('click', function() {
-            alert('Chatbot is under development. Stay tuned!');
-        });
-    </script>
 </body>
 </html>
