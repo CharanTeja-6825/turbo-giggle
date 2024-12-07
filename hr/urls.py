@@ -18,6 +18,7 @@ urlpatterns = [
     path('courses/delete/<int:course_id>/', views.course_delete, name='course_delete'),
     path('courses/<int:course_id>/edit/', views.course_update, name='course_update'),
     path('course/<int:course_id>/upload/', views.upload_material, name='upload_material'),
+    path('chatbot_view/',views.chatbot_view,name='chatbot_view'),
 ]
 
 if settings.DEBUG:

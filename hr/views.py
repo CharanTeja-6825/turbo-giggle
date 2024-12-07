@@ -202,3 +202,24 @@ from .forms import TrainingInquiryForm
 def training_success(request):
     return render(request, 'project/mail_sent.html')
 
+############# CHATBOT ##########################3
+
+# views.py
+from django.http import JsonResponse
+from django.shortcuts import render
+import google.generativeai as ai
+
+# Configure the API
+API_KEY = 'AIzaSyBerItDJLRgdSL6z7dDqXH_ggEsmp6m12I'
+ai.configure(api_key=API_KEY)
+model = ai.GenerativeModel("gemini-pro")
+chat = model.start_chat()
+
+def chatbot_view(request):
+    if request.method == 'POST':
+        user_message = request.POST.get('message', '')
+        if user_message.lower() == 'bye':
+            return JsonResponse({'response': 'Goodbye!'})
+        response = chat.send_message(user_message)
+        return JsonResponse({'response': response.text})
+    return render(request, 'project/chatbot.html')

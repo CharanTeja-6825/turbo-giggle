@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        /* Basic styling for chatbot interface */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        #chat-container {
+            width: 400px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #e9ecef;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 8px 12px;
+            border-radius: 5px;
+            max-width: 75%;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        #message-form {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        #user-message {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <form id="message-form">
+            <input type="text" id="user-message" placeholder="Type your message..." autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const form = document.getElementById('message-form');
+        const userMessageInput = document.getElementById('user-message');
+
+        // Function to add a message to the chat
+        function addMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom
+        }
+
+        // Event listener for form submission
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const userMessage = userMessageInput.value.trim();
+            if (!userMessage) return;
+
+            // Add user message to the chat
+            addMessage(userMessage, true);
+
+            // Clear input field
+            userMessageInput.value = '';
+
+            // Send message to the server
+            fetch('', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams({ message: userMessage })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Add bot response to the chat
+                    addMessage(data.response, false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addMessage('An error occurred. Please try again later.', false);
+                });
+        });
+    </script>
+</body>
+</html>
