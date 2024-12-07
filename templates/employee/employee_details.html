@@ -227,7 +227,7 @@
         <div class="links">
             <a href="{% url 'home_redirect' %}">Home</a>
             <div class="dropdown">
-                <a href="#">{{ user.username }}<i class="fa fa-caret-down"></i></a>
+                <a href="#">{{ user.get_full_name }}<i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-content">
                     <a href="{% url 'update_profile' %}"> Update </a>
                     <a href="{% url 'logout' %}">Logout</a>
@@ -258,7 +258,7 @@
                     <tr>
                         <td>{{ employee.first_name }}</td>
                         <td>{{ employee.last_name }}</td>
-                        <td>{{ employee.username }}</td>
+                        <td>{{ employee.get_full_name }}</td>
                         <td>{{ employee.email }}</td>
                         <td>
                             <div class="button-container">

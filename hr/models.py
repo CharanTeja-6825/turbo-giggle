@@ -8,6 +8,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=255)
     duration = models.CharField(max_length=50)
     serial_number = models.CharField(max_length=50, unique=True)
+    progress = models.IntegerField(default=0)
     description = models.TextField()
     trainer = models.ForeignKey(
         User,
