@@ -216,9 +216,86 @@ body{
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+
+        .navbar .login-btn {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .login-btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar ul {
+                display: none;
+                flex-direction: column;
+                background-color: #00274d;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 100%;
+                padding: 20px 0;
+                text-align: center;
+            }
+
+            .navbar ul.active {
+                display: flex;
+            }
+
+            .navbar .menu-toggle {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
+<!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="#">Home</a>
+        </div>
+    </nav>
+
     <div class="container" id="container">
         <!-- Sign-Up Form -->
         <div class="form-container sign-up">
