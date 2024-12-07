@@ -3,9 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <title>Modern Login Page | AsmrProg</title>
+    <title>Login Page</title>
     <style>
-          @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         /* ... Include your existing CSS styles here ... */
 
 *{
@@ -33,7 +33,7 @@ body{
     overflow: hidden;
     width: 900px;
     max-width: 100%;
-    min-height: 550px;
+    min-height: 600px;
 }
 
 .container p{
@@ -288,26 +288,36 @@ body{
     </style>
 </head>
 <body>
-<!-- Navbar -->
     <nav class="navbar">
         <div class="brand">ETOS</div>
         <div class="links">
-            <a href="#">Home</a>
+            <a href="{% url 'homepage' %}">Home</a>
         </div>
     </nav>
 
     <div class="container" id="container">
         <!-- Sign-Up Form -->
         <div class="form-container sign-up">
-            <form method="POST" action="{% url 'register' %}">  <!-- Link to registration view -->
+            <form method="POST" action="{% url 'register' %}">
                 {% csrf_token %}
                 <h1>Create Account</h1>
+
+                <!-- Display error messages -->
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
+
                 <span>or use your email for registration</span>
                 <div class="mb-3">
                     <input type="text" class="form-control" name="firstname" placeholder="First Name" required>
@@ -327,13 +337,13 @@ body{
                 <div class="mb-3">
                     <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
                 </div>
-                <button type="submit" class="btn btn-success">Register</button>
+                <button type="submit" class="btn btn-success" onclick="return validateForm()">Register</button>
             </form>
         </div>
 
         <!-- Sign-In Form -->
         <div class="form-container sign-in">
-            <form method="POST" action="{% url 'login' %}">  <!-- Link to login view -->
+            <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
                 <h1>Sign In</h1>
                 <div class="social-icons">
@@ -368,17 +378,32 @@ body{
     </div>
 
     <script>
-        const container = document.getElementById('container');
-        const registerBtn = document.getElementById('register');
-        const loginBtn = document.getElementById('login');
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+    const errorMessages = document.querySelector('.alert-danger'); // Check if error messages exist
 
-        registerBtn.addEventListener('click', () => {
-            container.classList.add("active");
-        });
 
-        loginBtn.addEventListener('click', () => {
-            container.classList.remove("active");
-        });
-    </script>
+    registerBtn.addEventListener('click', () => {
+        container.classList.add("active"); // Show register form
+    });
+
+    loginBtn.addEventListener('click', (event) => {
+        container.classList.remove("active"); // Show login form
+    });
+
+    // Optional validation function for the register form
+    function validateForm() {
+        var password = document.querySelector('[name="password"]').value;
+        var confirmPassword = document.querySelector('[name="confirm_password"]').value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </body>
 </html>

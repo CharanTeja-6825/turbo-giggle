@@ -1,16 +1,12 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.http import require_POST
-from django.core.mail import send_mail
-from django.conf import settings
 from django.http import JsonResponse
 import google.generativeai as ai
-from .forms import CourseForm, MaterialForm, TrainingInquiryForm
-from .models import Course, Material
+from .forms import CourseForm, MaterialForm
+from .models import Course
 
 # Configure chatbot API
 try:
@@ -35,9 +31,6 @@ def hr_dashboard(request):
     return render(request, 'hr/hr_homepage.html')
 
 
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User
 from django.contrib import messages

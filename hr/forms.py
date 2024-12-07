@@ -23,6 +23,10 @@ class MaterialForm(forms.ModelForm):
         model = Material
         fields = ['title', 'file', 'course']
 
+    # file = forms.FileField(
+    #     widget=forms.ClearableFileInput(attrs={'multiple': True}),
+    #     required=False  # Optional, depending on your needs
+    # )
 # forms.py
 from django import forms
 from .models import TrainingInquiry

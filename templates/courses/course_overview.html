@@ -276,7 +276,7 @@
     <nav class="navbar">
         <div class="brand">ETOS</div>
         <div class="links">
-            <a href="{% url '#' %}">Home</a>
+            <a href="{% url 'home_redirect' %}">Home</a>
             <a href="{% url 'employee_dashboard' %}">Dashboard</a>
             <div class="dropdown">
                 <a href="#">{{ user.username }}<i class="fa fa-caret-down"></i></a>
