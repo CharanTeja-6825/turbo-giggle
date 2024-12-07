@@ -249,7 +249,7 @@
             <a href="{% url 'hr_homepage' %}">Home</a>
             <a href="{% url 'course_list' %}"> Courses List </a>
             <div class="dropdown">
-                <a href="#">{{ user.username }}<i class="fa fa-caret-down"></i></a>
+                <a href="#">{{ user.get_full_name }}<i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-content">
                     <a href="{% url 'update_profile' %}"> Update </a>
                     <a href="{% url 'logout' %}">Logout</a>
