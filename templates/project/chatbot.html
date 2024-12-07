@@ -4,122 +4,303 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Basic styling for chatbot interface */
-        body {
-            font-family: Arial, sans-serif;
+        /* General Reset */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
+            flex-direction: column;
+            text-align: center;
         }
 
-        #chat-container {
-            width: 400px;
+        /* Chatbot Container */
+        .chatbot-container {
+            width: 900px;
+            height: 600px;
             background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
         }
 
-        #messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            background-color: #e9ecef;
-            border-bottom: 1px solid #ddd;
+        .chatbot-header {
+            background-color: #512da8;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            position: relative;
         }
 
-        .message {
-            margin: 5px 0;
-            padding: 8px 12px;
-            border-radius: 5px;
-            max-width: 75%;
-        }
-
-        .user-message {
-            background-color: #007bff;
-            color: white;
-            align-self: flex-end;
-        }
-
-        .bot-message {
-            background-color: #f1f1f1;
-            color: #333;
-            align-self: flex-start;
-        }
-
-        #message-form {
-            display: flex;
-            padding: 10px;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
-        }
-
-        #user-message {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
+        .chatbot-header .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
             border: none;
-            border-radius: 5px;
+            color: #fff;
+            font-size: 20px;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #0056b3;
+        .chatbot-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f4f4f4;
+        }
+
+        .chatbot-message {
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            max-width: 75%;
+            margin: 10px 0;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #512da8;
+            color: #fff;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #eee;
+        }
+
+        .chatbot-footer {
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-footer input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 30px;
+            background-color: #eee;
+            outline: none;
+        }
+
+        .chatbot-footer button {
+            background-color: #512da8;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        /* Navbar Styles */
+        .navbar {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar .links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .navbar .links a:hover {
+            color: #512da8;
+        }
+
+        .navbar .login-btn {
+            padding: 10px 20px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .login-btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            color: #333;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero .btn {
+            padding: 15px 40px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #5c6bc0;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .navbar .brand {
+                font-size: 1.5rem;
+            }
+
+            .navbar .links a {
+                font-size: 0.9rem;
+            }
+        }
+        /* Dropdown Menu */
+        .dropdown {
+            padding: 20px 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            padding: 10px 5px;
+            margin-top: 15px;
+            border-radius: 9px;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 15px 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div id="chat-container">
-        <div id="messages"></div>
-        <form id="message-form">
-            <input type="text" id="user-message" placeholder="Type your message..." autocomplete="off">
-            <button type="submit">Send</button>
-        </form>
+<!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">ETOS</div>
+        <div class="links">
+            <a href="{% url 'hr_homepage' %}">Home</a>
+            <div class="dropdown">
+                <a href="#">{{ user.username }}<i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="{% url 'update_profile' %}"> Update </a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            Chatbot
+            <button class="close-btn" id="close-chatbot">&times;</button>
+        </div>
+        <div class="chatbot-body" id="chatbot-body">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chat-input" placeholder="Type your message..." />
+            <button id="send-message">Send</button>
+        </div>
     </div>
 
     <script>
-        const messagesDiv = document.getElementById('messages');
-        const form = document.getElementById('message-form');
-        const userMessageInput = document.getElementById('user-message');
+        // Close chatbot container
+        const closeChatbotButton = document.getElementById('close-chatbot');
+        closeChatbotButton.addEventListener('click', () => {
+            document.getElementById('chatbot-container').style.display = 'none';
+        });
 
-        // Function to add a message to the chat
+        // Add message to chatbot
+        const chatInput = document.getElementById('chat-input');
+        const sendMessageButton = document.getElementById('send-message');
+        const chatbotBody = document.getElementById('chatbot-body');
+
         function addMessage(message, isUser) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.className = `chatbot-message ${isUser ? 'user-message' : 'bot-message'}`;
             messageDiv.textContent = message;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom
+            chatbotBody.appendChild(messageDiv);
+            chatbotBody.scrollTop = chatbotBody.scrollHeight; // Scroll to the bottom
         }
 
-        // Event listener for form submission
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const userMessage = userMessageInput.value.trim();
+        sendMessageButton.addEventListener('click', () => {
+            const userMessage = chatInput.value.trim();
             if (!userMessage) return;
 
-            // Add user message to the chat
+            // Add user message to chat
             addMessage(userMessage, true);
 
             // Clear input field
-            userMessageInput.value = '';
+            chatInput.value = '';
 
-            // Send message to the server
+            // Send message to server (example)
             fetch('', {
                 method: 'POST',
                 headers: {
@@ -128,16 +309,16 @@
                 },
                 body: new URLSearchParams({ message: userMessage })
             })
-                .then(response => response.json())
-                .then(data => {
-                    // Add bot response to the chat
-                    addMessage(data.response, false);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    addMessage('An error occurred. Please try again later.', false);
-                });
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.response, false); // Add bot response
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addMessage('An error occurred. Please try again later.', false);
+            });
         });
     </script>
+
 </body>
 </html>

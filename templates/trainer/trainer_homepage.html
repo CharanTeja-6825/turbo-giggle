@@ -220,15 +220,11 @@
         <button class="btn" >Employees</button>
     </section>
 <!-- Chatbot Button -->
+    <a href="{% url 'chatbot_view' %}" target="_blank">
     <button class="chatbot-btn">
     ChatBot <i class="fa fa-robot"></i>
 </button>
 
-<script>
-    // Update the selector to match the correct button class
-    document.querySelector('.chatbot-btn').addEventListener('click', function() {
-        alert('Chatbot is under development. Stay tuned!');
-    });
-</script>
+    </a>
 </body>
 </html>
