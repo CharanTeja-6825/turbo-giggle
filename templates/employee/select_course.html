@@ -137,15 +137,16 @@
         <div class="brand">ETOS</div>
         <div class="links">
             <a href="{% url 'home_redirect' %}">Home</a>
-        </div>
-
-        <div class="dropdown">
+            <div class="dropdown">
                 <a href="#">{{ user.username }}<i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-content">
                     <a href="{% url 'update_profile' %}"> Update </a>
                     <a href="{% url 'logout' %}">Logout</a>
                 </div>
             </div>
+        </div>
+
+
 
     </nav>
 
