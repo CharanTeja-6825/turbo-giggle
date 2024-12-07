@@ -174,3 +174,33 @@ def chatbot_view(request):
         except Exception as e:
             return JsonResponse({'response': f"Error: {e}"})
     return render(request, 'project/chatbot.html')
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import User
+from .forms import FeedbackForm
+from .models import Feedback  # Assuming you have a Feedback model to store feedback data
+
+
+def feedback_create(request):
+    trainers = User.objects.filter(username__regex=r'^\d{4}$')  # Filter trainers with username length of 4
+
+    if request.method == 'POST':
+        try:
+            form = FeedbackForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your feedback has been submitted successfully!')
+                return redirect('feedback_list')  # Redirect to feedback list page or other page
+            messages.error(request, f"Form errors: {form.errors}")
+        except Exception as e:
+            messages.error(request, f"Error submitting feedback: {e}")
+
+    return render(request, 'feedback/employee_feedback.html', {'form': FeedbackForm(),
+                                                               'trainers': trainers})
+
+
+def feedback_list(request):
+    feedbacks = Feedback.objects.all()  # Assuming you have a Feedback model
+    return render(request, 'feedback/feedback_list.html', {'feedbacks': feedbacks})

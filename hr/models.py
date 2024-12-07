@@ -53,3 +53,17 @@ class TrainingInquiry(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Feedback(models.Model):
+    trainer = models.ForeignKey(User, on_delete=models.CASCADE)  # Trainer who received the feedback
+    rating = models.IntegerField()  # Rating from 1 to 5
+    comments = models.TextField()  # Detailed comments
+
+    def __str__(self):
+        return f"Feedback from {self.trainer.username} (Rating: {self.rating})"
+
