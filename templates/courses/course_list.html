@@ -164,7 +164,7 @@
                         <td>
     <div class="button-container">
         <a href="{% url 'course_update' course.id %}" class="btn">Edit</a> <!-- Assuming course_edit view exists -->
-        <a href="{% url 'upload_material' course.id %}" class="btn">Upload Material</a> <!-- Assuming course_edit view exists -->
+        <a href="{% url 'upload_material' course.id %}" class="btn">Material</a> <!-- Assuming course_edit view exists -->
 
         <!-- Delete button with POST request to delete the course -->
         <form action="{% url 'course_delete' course.id %}" method="POST" style="display: inline;">
