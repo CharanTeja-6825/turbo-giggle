@@ -34,21 +34,51 @@ def home_redirect(request):
 def hr_dashboard(request):
     return render(request, 'hr/hr_homepage.html')
 
+
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
+
 def register(request):
     if request.method == 'POST':
-        try:
-            user = User.objects.create_user(
-                username=request.POST['username'],
-                email=request.POST['email'],
-                password=request.POST['password'],
-                first_name=request.POST['firstname'],
-                last_name=request.POST['lastname']
-            )
-            user.save()
-            return redirect('login')
-        except Exception as e:
-            messages.error(request, f"Registration failed: {e}")
+        username = request.POST.get('username', '').strip()
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '').strip()
+        first_name = request.POST.get('firstname', '').strip()
+        last_name = request.POST.get('lastname', '').strip()
+
+        # Username validation
+        if len(username) < 4:
+            messages.error(request, "Username must be at least 4 characters long.")
+        elif not (username.isalpha() or username.isdigit()):
+            messages.error(request, "Username must contain only letters or only numbers.")
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists.")
+        else:
+            try:
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password,
+                    first_name=first_name,
+                    last_name=last_name
+                )
+                user.save()
+                messages.success(request, "Registration successful! You can now log in.")
+                return redirect('login')
+            except Exception as e:
+                messages.error(request, f"Registration failed: {e}")
+
+        # Redirect back to the register page if validation fails
+        return redirect('register')  # Ensure 'register' is a named URL for this view.
+
     return render(request, 'project/login_register.html')
+
 
 def login_view(request):
     if request.method == 'POST':
